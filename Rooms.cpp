@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Rooms.h"
 #include "Enemies.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ char RoomChoice(char A, char B)
 	return choice;
 }
 //Room functions to display room descriptions and choices for the player
-void Cellar()
+void Cellar(Player& player)
 {
 	Rooms Cellar;
 	Cellar.name = "Cellar";
@@ -27,15 +28,15 @@ void Cellar()
 
 	if (RoomChoice('A', 'B') == 'A')
 	{
-		Foyer();
+		Foyer(player);
 	}
 	else if (RoomChoice('A', 'B') == 'B')
 	{
-		Basement();
+		Basement(player);
 	}
 }
 
-void Foyer()
+void Foyer(Player& player)
 {
 	Rooms Foyer;
 	Foyer.name = "Foyer";
@@ -43,20 +44,21 @@ void Foyer()
 		<< "A: Fight the Goblin" << endl
 		<< "B: Try to sneak past it" << endl << endl;
 
-	if (RoomChoice('A', 'B') == 'A')
+	char choice = (RoomChoice('A', 'B'));
+	if (choice == 'A')
 	{
 		Enemy Goblin("Goblin", 100, 20);
-		EncounterEnemy(Goblin);
+		EncounterEnemy(player, Goblin);
 	}
-	else if (RoomChoice('A', 'B') == 'B')
+	else if (choice == 'B')
 	{
 		cout << endl << "You attempt to sneak past the goblin, but it quickly notices you and lunges at you with a wicked grin. You have no choice but to fight!" << endl;
 		Enemy Goblin("Goblin", 100, 20);
-		EncounterEnemy(Goblin);
+		EncounterEnemy(player, Goblin);
 	}
 }
 
-void Basement()
+void Basement(Player& player)
 {
 	Rooms Basement;
 	Basement.name = "Basement";
@@ -64,15 +66,16 @@ void Basement()
 		<< "A: Fight the Giant Rat" << endl
 		<< "B: Try to sneak past it" << endl;
 
-	if (RoomChoice('A', 'B') == 'A')
+	char choice = (RoomChoice('A', 'B'));
+	if (choice == 'A')
 	{
 		Enemy GiantRat("Giant Rat", 100, 30);
-		EncounterEnemy(GiantRat);
+		EncounterEnemy(player, GiantRat);
 	}
-	else if (RoomChoice('A', 'B') == 'B')
+	else if (choice == 'B')
 	{
 		cout << endl << "You attempt to sneak past the Giant Rat, but it quickly notices you and lunges at you with a wicked grin. You have no choice but to fight!" << endl;
 		Enemy GiantRat("Giant Rat", 100, 30);
-		EncounterEnemy(GiantRat);
+		EncounterEnemy(player, GiantRat);
 	}
 }

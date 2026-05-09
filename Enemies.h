@@ -6,7 +6,7 @@
 class Enemy : public Player
 {
 public:
-	Enemy(string name, float health, float baseDamage);
+	Enemy(std::string name, float health, float baseDamage);
 };
 
-void EncounterEnemy(const Enemy& enemy);
+void EncounterEnemy(Player& player, const Enemy& enemy);

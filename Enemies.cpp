@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Enemies.h"
 #include "Source.h"
+#include "Battle.h"
+#include "Player.h"
+
 using namespace std;
 
 Enemy::Enemy(string name, float health, float baseDamage)
@@ -10,15 +13,18 @@ Enemy::Enemy(string name, float health, float baseDamage)
 }
 
 Enemy Spider("Spider", 50, 5);
+Enemy Goblin("Goblin", 100, 20);
 
 //Function to display enemy encounter information
-void EncounterEnemy(const Enemy& enemy)
+void EncounterEnemy(Player& player, const Enemy& enemy)
 {
-	cout << endl
+	cout << "-----------------------------" << endl
+		<< "BATTLE COMMENCED" << endl
 		<< "You encountered: " << enemy.name << endl
 		<< "Health: " << enemy.health << endl
 		<< "Damage: " << enemy.baseDamage << endl
 		<< endl;
+	Battle(player, Goblin);
 }
 
 //Creating enemy Spider with stats

@@ -9,4 +9,3 @@ Player::Player(string name, float health, float baseDamage)
     : name(name), health(health), baseDamage(baseDamage)
 {
 }
-

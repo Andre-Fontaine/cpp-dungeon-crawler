@@ -1,4 +1,4 @@
 #pragma once
 
-void GameStart();
+std::string GameStart();
 

@@ -8,20 +8,24 @@
 using namespace std;
 
 //Start of game
-void GameStart()
+string GameStart()
 {
 	cout << "Welcome to Dungeon Crawler!" << endl;
-	cout << "You will play as Andre, a lost soul waking up in an unknown dungeon." << endl;
+	string playerName;
+	cout << "What is your name?" << endl;
+	getline(cin, playerName);
+	cout << "You will play as " << playerName << ", a lost soul waking up in an unknown dungeon." << endl;
 	cout << "You won't know what lies ahead through this labyrinth. Find the means to survive." << endl << endl;
+	return playerName;
 }
 
 int main()
 {
-	GameStart();
-	Cellar();
+	string playerName = GameStart();
+	Player player(playerName, 100, 10);
+	Cellar(player);
 
-	//Creating player character with stats
-	Player Andre("Andre", 100, 10);
+
 
 	//Creating item Sword with stats
 	Items Sword("Sword", "A sharp blade that can be used to deal damage to enemies.", 5);

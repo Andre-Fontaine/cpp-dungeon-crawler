@@ -1,20 +1,20 @@
 #pragma once
 #include <string>
-using namespace std;
+#include "Player.h"
 
 class Rooms
 {
 public:
-	string name;
-	string description;
+	std::string name;
+	std::string description;
 	bool hasEnemy = false;
 	bool hasItem = false;
 };
 
 char RoomChoice(char A, char B);
 
-void Cellar();
+void Cellar(Player& player);
 
-void Basement();
+void Basement(Player& player);
 
-void Foyer();
+void Foyer(Player& player);

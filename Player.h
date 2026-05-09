@@ -1,24 +1,24 @@
 #pragma once
 #include <string>
-using namespace std;
+#include <iostream>
 
 class Player
 {
 public:
-	string name;
+	std::string name;
 	float health;
 	float baseDamage;
 
-	Player(string name, float health, float baseDamage);
+	Player(std::string name, float health, float baseDamage);
 
 	void TakeDamage(float damage) //Function to reduce health when taking damage
 	{
 		health -= damage;
-		cout << name << " takes " << damage << " damage " << "and has " << health << " health left." << endl;
+		std::cout << name << " takes " << damage << " damage " << "and has " << health << " health left." << std::endl;
 		if (health < 0)
 		{
 			health = 0;
-			cout << name << " has been defeated!" << endl;
+			std::cout << name << " has been defeated!" << std::endl;
 		}
 	}
 };
