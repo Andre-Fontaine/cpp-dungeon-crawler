@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <thread>
+#include <chrono>
 #include "source.h"
 #include "Rooms.h"
 #include "Enemies.h"
@@ -7,15 +9,25 @@
 #include "Items.h"
 using namespace std;
 
+void TypeWriter(const string& text, int speed)
+{
+	for (char c : text)
+	{
+		cout << c << flush;
+		this_thread::sleep_for(chrono::milliseconds(speed));
+	}
+	cout << endl;
+}
+
 //Start of game
 string GameStart()
 {
-	cout << "Welcome to Dungeon Crawler!" << endl;
+	TypeWriter("Welcome to the Dungeon Crawler! Prepare to explore a mysterious labyrinth filled with danger and adventure.");
 	string playerName;
-	cout << "What is your name?" << endl;
+	TypeWriter("Please enter your name:");
 	getline(cin, playerName);
-	cout << "You will play as " << playerName << ", a lost soul waking up in an unknown dungeon." << endl;
-	cout << "You won't know what lies ahead through this labyrinth. Find the means to survive." << endl << endl;
+	TypeWriter("Welcome, " + playerName + "! Your journey begins now.");
+	TypeWriter("You won't know what lies ahead through this labyrinth. Find the means to survive.");
 	return playerName;
 }
 

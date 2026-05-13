@@ -12,8 +12,8 @@ Enemy::Enemy(string name, float health, float baseDamage)
 { 
 }
 
-Enemy Spider("Spider", 50, 5);
-Enemy Goblin("Goblin", 100, 20);
+Enemy Spider("Spider", 15, 5);
+Enemy Goblin("Goblin", 25, 20);
 
 //Function to display enemy encounter information
 void EncounterEnemy(Player& player, const Enemy& enemy)
