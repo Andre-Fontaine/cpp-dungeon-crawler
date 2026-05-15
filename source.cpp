@@ -1,23 +1,14 @@
 #include <iostream>
 #include <string>
-#include <thread>
-#include <chrono>
 #include "source.h"
 #include "Rooms.h"
 #include "Enemies.h"
 #include "Player.h"
 #include "Items.h"
+#include "Utils.h"
 using namespace std;
 
-void TypeWriter(const string& text, int speed)
-{
-	for (char c : text)
-	{
-		cout << c << flush;
-		this_thread::sleep_for(chrono::milliseconds(speed));
-	}
-	cout << endl;
-}
+
 
 //Start of game
 string GameStart()
@@ -26,8 +17,7 @@ string GameStart()
 	string playerName;
 	TypeWriter("Please enter your name:");
 	getline(cin, playerName);
-	TypeWriter("Welcome, " + playerName + "! Your journey begins now.");
-	TypeWriter("You won't know what lies ahead through this labyrinth. Find the means to survive.");
+	TypeWriter("Welcome, " + playerName + "! You won't know what lies ahead through this labyrinth. Find the means to survive. Your journey begins now.", 30, true);
 	return playerName;
 }
 

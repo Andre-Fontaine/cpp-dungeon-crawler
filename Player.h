@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include "source.h"
+#include "Utils.h"
 
 class Player
 {
@@ -14,11 +16,11 @@ public:
 	void TakeDamage(float damage) //Function to reduce health when taking damage
 	{
 		health -= damage;
-		std::cout << name << " takes " << damage << " damage " << "and has " << health << " health left." << std::endl;
+		TypeWriter(name + " takes " + std::to_string(damage) + " damage " + "and has " + std::to_string(health) + " health left.", 30, true);
 		if (health < 0)
 		{
 			health = 0;
-			std::cout << name << " has been defeated!" << std::endl;
+			TypeWriter(name + " has been defeated!", 30, true);
 		}
 	}
 };
