@@ -29,6 +29,5 @@ int main()
 
 
 
-	//Creating item Sword with stats
-	Items Sword("Sword", "A sharp blade that can be used to deal damage to enemies.", 5);
+
 }

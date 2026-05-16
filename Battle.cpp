@@ -5,6 +5,8 @@
 #include "Battle.h"
 #include "source.h"
 #include "Utils.h"
+#include "Items.h"
+#include "Player.h"
 
 int GenerateNumber(int min, int max) //Generates a random number at the start of the battle
 {

@@ -23,6 +23,7 @@ char RoomChoice(char A, char B)
 void Cellar(Player& player)
 {
 	Rooms Cellar;
+	Cellar.hasItem = true;
 	Cellar.name = "The Cellar";
 	TypeWriter(Cellar.name, 30, true);
 	Delay(2000);

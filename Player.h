@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include "source.h"
+#include <vector>
 #include "Utils.h"
+#include "Items.h"
+
 
 class Player
 {
@@ -10,7 +12,7 @@ public:
 	std::string name;
 	float health;
 	float baseDamage;
-
+	std::vector<Items> inventory;
 	Player(std::string name, float health, float baseDamage);
 
 	void TakeDamage(float damage) //Function to reduce health when taking damage
