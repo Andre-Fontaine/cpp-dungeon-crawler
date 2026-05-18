@@ -10,12 +10,12 @@ class Player
 {
 public:
 	std::string name;
-	float health;
-	float baseDamage;
+	int health;
+	int baseDamage;
 	std::vector<Items> inventory;
-	Player(std::string name, float health, float baseDamage);
+	Player(std::string name, int health, int baseDamage);
 
-	void TakeDamage(float damage) //Function to reduce health when taking damage
+	void TakeDamage(int damage) //Function to reduce health when taking damage
 	{
 		health -= damage;
 		TypeWriter(name + " takes " + std::to_string(damage) + " damage " + "and has " + std::to_string(health) + " health left.", 30, true);

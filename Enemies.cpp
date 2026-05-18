@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Enemy::Enemy(string name, float health, float baseDamage)
+Enemy::Enemy(string name, int health, int baseDamage)
 	: Player(name, health, baseDamage)
 { 
 }

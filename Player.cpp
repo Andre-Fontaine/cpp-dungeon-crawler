@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Player::Player(string name, float health, float baseDamage)
+Player::Player(string name, int health, int baseDamage)
     : name(name), health(health), baseDamage(baseDamage)
 {
 }
