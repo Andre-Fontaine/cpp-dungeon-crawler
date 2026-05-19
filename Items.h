@@ -5,6 +5,8 @@
 
 class Player;
 
+enum class ItemType { Weapon, Armor };
+
 class Items
 {
 public:
@@ -12,12 +14,16 @@ public:
     std::string description;
     int damageBonus;
     int healthBonus;
+    ItemType type;
 
     Items();
-    Items(std::string name, std::string description, int damageBonus, int healthBonus);
+    Items(std::string name, std::string description, int damageBonus, int healthBonus, ItemType type);
     void ChooseItem(Player& player);
 };
 
 extern Items Mace;
 extern Items Axe;
 extern Items Bow;
+extern Items LeatherArmor;
+extern Items Chainmail;
+extern Items PlateArmor;

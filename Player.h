@@ -11,7 +11,9 @@ class Player
 public:
 	std::string name;
 	int health;
+	int maxHealth;
 	int baseDamage;
+	int maxDamage;
 	std::vector<Items> inventory;
 	Player(std::string name, int health, int baseDamage);
 

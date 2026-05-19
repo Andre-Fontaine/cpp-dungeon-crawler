@@ -5,19 +5,20 @@
 #include "Player.h"
 #include "source.h"
 #include "Utils.h"
-
 using namespace std;
-
 
 //Function to get player input for room choices and validate it
 char RoomChoice(char A, char B)
 {
 	char choice;
-	cin >> choice;
-	if (choice != A && choice != B)
+	do 
 	{
-		TypeWriter("Invalid choice. Please choose either A or B.", 30, true);
-	}
+		cin >> choice;
+		if (choice != A && choice != B)
+		{
+			TypeWriter("Invalid choice. Please choose either A or B.", 30, true);
+		}
+	} while (choice != A && choice != B);
 	return choice;
 }
 
@@ -26,15 +27,22 @@ void ItemEncounter(Player& player, Rooms& room)
 {
 	if (room.hasItem)
 	{
-		TypeWriter("You find a weapon!", 30, true);
-		TypeWriter(room.item.name + ": " + room.item.description + " It provides a " + std::to_string(room.item.damageBonus) + " damage bonus.", 30, false);
+		TypeWriter("You found an item!", 30, true);
+		if (room.item.type == ItemType::Weapon)
+		{
+			TypeWriter(room.item.name + ": " + room.item.description + " It provides a " + std::to_string(room.item.damageBonus) + " damage bonus.", 30, false);
+		}
+		else if (room.item.type == ItemType::Armor)
+		{
+			TypeWriter(room.item.name + ": " + room.item.description + " It provides a " + std::to_string(room.item.healthBonus) + " health bonus.", 30, false);
+		}
 		room.item.ChooseItem(player);
 		room.hasItem = false;
 		// Logic to determine which item is found and add it to the player's inventory
 	}
 }
 
-//Room functions to display room descriptions and choices for the player
+//### ALL ROOMS AND ENCOUNTERS START HERE ###
 void Cellar(Player& player)
 {
 	Rooms Cellar;
@@ -47,11 +55,13 @@ void Cellar(Player& player)
 		std::cout << endl << "A: Approach the door" << endl
 		<< "B: Descend the stairwell" << endl;
 
-	if (RoomChoice('A', 'B') == 'A')
+	char choice = (RoomChoice('A', 'B'));
+
+	if (choice == 'A')
 	{
 		Foyer(player);
 	}
-	else if (RoomChoice('A', 'B') == 'B')
+	else if (choice == 'B')
 	{
 		Basement(player);
 	}
@@ -90,8 +100,12 @@ void Basement(Player& player)
 {
 	Rooms Basement;
 	Basement.name = "The Basement";
+	Basement.hasItem = true;
+	Basement.item = LeatherArmor;
 	TypeWriter(Basement.name, 30, true);
 	Delay(2000);
+	ItemEncounter(player, Basement);
+	Delay(1000);
 	TypeWriter("The basement is cold and eerie. The air is thick with the smell of mold and decay. In the corner, you see a shadowy figure lurking. It seems to be a giant rat, its eyes glowing in the darkness. You can hear its low growls as it prepares to attack.", 30, true);
 	std::cout << endl
 		<< "A: Fight the Giant Rat" << endl

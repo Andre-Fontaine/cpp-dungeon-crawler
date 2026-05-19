@@ -7,7 +7,7 @@
 using namespace std;
 
 Player::Player(string name, int health, int baseDamage)
-    : name(name), health(health), baseDamage(baseDamage)
+	: name(name), health(health), baseDamage(baseDamage), maxHealth(health), maxDamage(baseDamage)
 {
 }
 
