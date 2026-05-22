@@ -9,4 +9,4 @@ public:
 	Enemy(std::string name, int health, int baseDamage);
 };
 
-void EncounterEnemy(Player& player, const Enemy& enemy);
+void EncounterEnemy(Player& player, Enemy& enemy);

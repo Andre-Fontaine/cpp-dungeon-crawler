@@ -14,6 +14,8 @@ public:
 	int maxHealth;
 	int baseDamage;
 	int maxDamage;
+	bool weaponIsEquipped = false;
+	bool armorIsEquipped = false;
 	std::vector<Items> inventory;
 	Player(std::string name, int health, int baseDamage);
 

@@ -19,6 +19,7 @@ public:
     Items();
     Items(std::string name, std::string description, int damageBonus, int healthBonus, ItemType type);
     void ChooseItem(Player& player);
+	void ReplaceItem(Player& player, Items& newItem);
 };
 
 extern Items Mace;

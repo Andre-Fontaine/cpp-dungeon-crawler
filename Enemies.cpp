@@ -12,19 +12,16 @@ Enemy::Enemy(string name, int health, int baseDamage)
 { 
 }
 
-Enemy Spider("Spider", 15, 5);
-Enemy Goblin("Goblin", 25, 20);
-
 //Function to display enemy encounter information
-void EncounterEnemy(Player& player, const Enemy& enemy)
+void EncounterEnemy(Player& player, Enemy& enemy)
 {
 	cout << "-----------------------------" << endl
 		<< "BATTLE COMMENCED" << endl
 		<< "You encountered: " << enemy.name << endl
 		<< "Health: " << enemy.health << endl
 		<< "Damage: " << enemy.baseDamage << endl
-		<< endl;
-	Battle(player, Goblin);
+		<< "-----------------------------" << endl;
+	Battle(player, enemy);
 }
 
 //Creating enemy Spider with stats

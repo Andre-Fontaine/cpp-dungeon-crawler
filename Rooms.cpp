@@ -27,7 +27,7 @@ void ItemEncounter(Player& player, Rooms& room)
 {
 	if (room.hasItem)
 	{
-		TypeWriter("You found an item!", 30, true);
+		TypeWriter("***You found an item!***", 50, true);
 		if (room.item.type == ItemType::Weapon)
 		{
 			TypeWriter(room.item.name + ": " + room.item.description + " It provides a " + std::to_string(room.item.damageBonus) + " damage bonus.", 30, false);
@@ -46,11 +46,13 @@ void ItemEncounter(Player& player, Rooms& room)
 void Cellar(Player& player)
 {
 	Rooms Cellar;
-	Cellar.hasItem = false;
+	Cellar.hasItem = true;
+	Cellar.item = Bow;
 	Cellar.name = "The Cellar";
-	TypeWriter(Cellar.name, 30, true);
+	TypeWriter(Cellar.name, 60, true);
 	Delay(2000);
-	//Item encounter
+	ItemEncounter(player, Cellar);
+	Delay(1000);
 	TypeWriter("Cold stone. Darkness. The smell of something rotting nearby. You sit up slowly, head pounding, with no memory of how you got here. You're in a cellar, abandoned by the looks of it. Dusty kegs line the walls, empty glasses and cleaning supplies are strewn across the floor. This place hasn't seen life in decades. As your eyes adjust to the darkness, two paths reveal themselves. Ahead, a worn wooden door sits slightly ajar, a faint sliver of light creeping through the gap. Behind you, a stone stairwell descends into complete darkness, the air rising from below carrying a chill that makes your skin crawl. You have no idea what lies beyond either path. But staying here isn't an option.", 30, true);
 		std::cout << endl << "A: Approach the door" << endl
 		<< "B: Descend the stairwell" << endl;
@@ -70,10 +72,11 @@ void Cellar(Player& player)
 void Foyer(Player& player)
 {
 	Rooms Foyer;
+	Enemy Goblin("Goblin", 100, 20);
 	Foyer.hasItem = true;
 	Foyer.item = Mace;
 	Foyer.name = "The Foyer";
-	TypeWriter(Foyer.name, 30, true);
+	TypeWriter(Foyer.name, 60, true);
 	Delay(2000);
 	ItemEncounter(player, Foyer);
 	Delay(1000);
@@ -85,13 +88,11 @@ void Foyer(Player& player)
 	char choice = (RoomChoice('A', 'B'));
 	if (choice == 'A')
 	{
-		Enemy Goblin("Goblin", 100, 20);
 		EncounterEnemy(player, Goblin);
 	}
 	else if (choice == 'B')
 	{
 		TypeWriter("You take one slow step back toward the door. Then another. The goblin tilts its head, watching. For a moment you think it might let you leave. Then it lunges.", 30, true);
-		Enemy Goblin("Goblin", 100, 20);
 		EncounterEnemy(player, Goblin);
 	}
 }
@@ -99,10 +100,11 @@ void Foyer(Player& player)
 void Basement(Player& player)
 {
 	Rooms Basement;
+	Enemy GiantRat("Giant Rat", 35, 30);
 	Basement.name = "The Basement";
 	Basement.hasItem = true;
 	Basement.item = LeatherArmor;
-	TypeWriter(Basement.name, 30, true);
+	TypeWriter(Basement.name, 60, true);
 	Delay(2000);
 	ItemEncounter(player, Basement);
 	Delay(1000);
@@ -114,13 +116,11 @@ void Basement(Player& player)
 	char choice = (RoomChoice('A', 'B'));
 	if (choice == 'A')
 	{
-		Enemy GiantRat("Giant Rat", 100, 30);
 		EncounterEnemy(player, GiantRat);
 	}
 	else if (choice == 'B')
 	{
 		TypeWriter("You attempt to sneak past the Giant Rat, but it quickly notices you and lunges at you with a wicked grin. You have no choice but to fight!", 30, true);
-		Enemy GiantRat("Giant Rat", 100, 30);
 		EncounterEnemy(player, GiantRat);
 	}
 }

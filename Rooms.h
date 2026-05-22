@@ -17,8 +17,11 @@ void ItemEncounter(Player& player, Rooms& room);
 
 char RoomChoice(char A, char B);
 
-void Cellar(Player& player);
-
+// ### List of rooms ##
+void Cellar(Player& player); //First room
 void Basement(Player& player);
-
 void Foyer(Player& player);
+void Library(Player& player);
+void DiningHall(Player& player);
+void Armory(Player& player);
+void Courtyard(Player& player); //Last room
