@@ -14,24 +14,46 @@ Items::Items(string name, string description, int damageBonus, int healthBonus, 
 
 void Items::ChooseItem(Player& player)//Function to allow the player to choose whether or not to equip the item, providing a damage bonus if they do
 {
-	if (player.weaponIsEquipped || player.armorIsEquipped)
+	bool replacingWeapon = (type == ItemType::Weapon && player.weaponIsEquipped);
+	bool replacingArmor = (type == ItemType::Armor && player.armorIsEquipped);
+
+	if (replacingWeapon || replacingArmor)
 	{
 		TypeWriter("You already have an item equipped. Would you like to replace it with the " + name + "? (Y/N)", 30, true);
 		char replaceChoice;
 		cin >> replaceChoice;
 		if (replaceChoice == 'Y' || replaceChoice == 'y')
 		{
-			if (player.weaponIsEquipped)
+			if (replacingWeapon)
 			{
-				player.baseDamage -= damageBonus; // Remove the damage bonus from the currently equipped weapon
-				player.weaponIsEquipped = false; // Set isEquipped to false to indicate that the current weapon is no longer equipped
+				//Removes damage bonus from currently equipped weapon
+				player.baseDamage -= player.equippedWeaponDamage;
+				player.maxDamage -= player.equippedWeaponDamage; 
+
+				//Add new weapon's damage bonus
+				player.baseDamage += damageBonus; 
+				player.maxDamage += damageBonus; 
+
+				//Update equippedWeaponDamage to reflect the new weapon's damage bonus
+				player.equippedWeaponDamage = damageBonus; 
+				TypeWriter("You unequip your current item and equip the " + name + ", now having " + std::to_string(player.baseDamage) + " damage.", 30, true);
+				return;
 			}
-			else if (player.armorIsEquipped)
+			else if (replacingArmor)
 			{
-				player.health -= healthBonus; // Remove the health bonus from the currently equipped armor
-				player.armorIsEquipped = false; // Set isEquipped to false to indicate that the current armor is no longer equipped
+				//Removes health bonus from currently equipped armor
+				player.health -= player.equippedArmorHealth;
+				player.maxHealth -= player.equippedArmorHealth;
+
+				//Add new armor's health bonus
+				player.health += healthBonus;
+				player.maxHealth += healthBonus;
+
+				//Update equippedArmorHealth to reflect the new armor's health bonus
+				player.equippedArmorHealth = healthBonus;
+				TypeWriter("You unequip your current item and equip the " + name + ", now having " + std::to_string(player.health) + " health.", 30, true);
+				return;
 			}
-			TypeWriter("You unequip your current item and prepare to equip the " + name + ".", 30, true);
 		}
 		else if (replaceChoice == 'N' || replaceChoice == 'n')
 		{
@@ -40,33 +62,34 @@ void Items::ChooseItem(Player& player)//Function to allow the player to choose w
 		}
 	}
 
-    int totalDamage = player.baseDamage + damageBonus;
-	char equipChoice;
-	TypeWriter("Would you like to equip the " + name + "? (Y/N)", 30, true);
-	cin >> equipChoice;
-    if (equipChoice == 'Y' || equipChoice == 'y')
-    {
-		if (type == ItemType::Weapon)
+	//Equip item if no item is currently equipped
+		char equipChoice;
+		TypeWriter("Would you like to equip the " + name + "? (Y/N)", 30, true);
+		cin >> equipChoice;
+		if (equipChoice == 'Y' || equipChoice == 'y')
 		{
-			player.baseDamage += damageBonus;
-			TypeWriter(player.name + " equips the " + name + " and gains " + std::to_string(damageBonus) + " bonus damage, totalling " + std::to_string(totalDamage) + " damage!", 30, true);
-			player.maxDamage += damageBonus; // Update damageBonus to reflect the player's new total damage after equipping the weapon
-			player.weaponIsEquipped = true; // Set isEquipped to true to indicate that the item is now equipped
+			if (type == ItemType::Weapon)
+			{
+				player.baseDamage += damageBonus;
+				player.maxDamage += damageBonus; // Update damageBonus to reflect the player's new total damage after equipping the weapon
+				player.weaponIsEquipped = true; // Set isEquipped to true to indicate that the item is now equipped
+				player.equippedWeaponDamage = damageBonus;
+				TypeWriter(player.name + " equips the " + name + " and gains " + std::to_string(damageBonus) + " bonus damage, totalling " + std::to_string(player.baseDamage) + " damage!", 30, true);
+			}
+			else if (type == ItemType::Armor)
+			{
+				player.health += healthBonus;
+				player.maxHealth += healthBonus; // Increase maxHealth by the health bonus provided by the armor
+				player.armorIsEquipped = true; // Set isEquipped to true to indicate that the item is now equipped
+				player.equippedArmorHealth = healthBonus;
+				TypeWriter(player.name + " equips the " + name + " and gains " + std::to_string(healthBonus) + " bonus health, totalling " + std::to_string(player.health) + " health!", 30, true);
+			}
 		}
-		else if (type == ItemType::Armor)
+		else if (equipChoice == 'N' || equipChoice == 'n')
 		{
-			player.health += healthBonus;
-			TypeWriter(player.name + " equips the " + name + " and gains " + std::to_string(healthBonus) + " bonus health, totalling " + std::to_string(player.health) + " health!", 30, true);
-			player.maxHealth += healthBonus; // Increase maxHealth by the health bonus provided by the armor
-			player.armorIsEquipped = true; // Set isEquipped to true to indicate that the item is now equipped
+			TypeWriter(player.name + " decides not to equip the " + name + ".", 30, true);
 		}
-    }
-	else if (equipChoice == 'N' || equipChoice == 'n')
-    {
-		TypeWriter(player.name + " decides not to equip the " + name + ".", 30, true);
-    }
-
-}
+	}
 
 //Weapons
 Items Mace("Mace", "A solid iron headed club designed for one thing: delivering devastating, crushing blows that shields and armor can't stop.", 7, 0, ItemType::Weapon);

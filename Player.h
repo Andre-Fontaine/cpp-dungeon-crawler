@@ -14,9 +14,13 @@ public:
 	int maxHealth;
 	int baseDamage;
 	int maxDamage;
+
 	bool weaponIsEquipped = false;
 	bool armorIsEquipped = false;
-	std::vector<Items> inventory;
+
+	int equippedWeaponDamage = 0;
+	int equippedArmorHealth = 0;
+
 	Player(std::string name, int health, int baseDamage);
 
 	void TakeDamage(int damage) //Function to reduce health when taking damage
