@@ -28,7 +28,7 @@ void EnemyFirst(Player& player, Enemy& enemy)//Function to determine the outcome
 	player.TakeDamage(enemy.baseDamage);
 }
 
-void Battle(Player& player, Enemy& enemy)//Function to handle the battle mechanics, including the coin flip to determine who goes first and the battle loop that continues until either the player or the enemy's health drops to 0 or below
+bool Battle(Player& player, Enemy& enemy)//Function to handle the battle mechanics, including the coin flip to determine who goes first and the battle loop that continues until either the player or the enemy's health drops to 0 or below
 {
 	TypeWriter("A coin flip determines who attacks first in battle. Heads for " + player.name + ", tails for " + enemy.name + ".", 30, true);
 	while (player.health > 0 && enemy.health > 0) //Battle loop that continues until either the player or the enemy's health drops to 0 or below
@@ -57,10 +57,12 @@ void Battle(Player& player, Enemy& enemy)//Function to handle the battle mechani
 	{
 		player.health = player.maxHealth; //Restores player's health to max after winning a battle
 		TypeWriter(player.name + " wins the battle! Your health has been restored to " + std::to_string(player.maxHealth) + ".", 30, true);
+		return true;
 	}
 	else
 	{
-		TypeWriter(enemy.name + " wins the battle! Game over.", 30, true);
+		TypeWriter(enemy.name + " wins the battle!", 30, true);
+		return false;
 	}
 }
 
