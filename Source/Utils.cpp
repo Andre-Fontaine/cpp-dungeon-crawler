@@ -22,3 +22,4 @@ void Delay(int milliseconds) //Function to create a delay in the game, used for 
 {
 	this_thread::sleep_for(chrono::milliseconds(milliseconds));
 }
+
