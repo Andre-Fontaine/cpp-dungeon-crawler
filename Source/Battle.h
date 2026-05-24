@@ -6,5 +6,5 @@ int GenerateNumber(int min, int max); //Generates a random number at the start o
 
 void PlayerFirst(Player& player, Enemy& enemy);
 void EnemyFirst(Player& player, Enemy& enemy);
-bool Battle(Player& player, Enemy& enemy);
-bool BattleTimer(Player& player, Enemy& enemy);
+bool Battle(Player& player, Enemy& enemy, int speed, int windowSize);
+bool BattleTimer(Player& player, Enemy& enemy, int speed, int windowSize);

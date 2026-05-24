@@ -75,6 +75,7 @@ void Items::ChooseItem(Player& player)//Function to allow the player to choose w
 				player.weaponIsEquipped = true; // Set isEquipped to true to indicate that the item is now equipped
 				player.equippedWeaponDamage = damageBonus;
 				TypeWriter(player.name + " equips the " + name + " and gains " + std::to_string(damageBonus) + " bonus damage, totalling " + std::to_string(player.baseDamage) + " damage!", 30, true);
+				Delay(1000);
 			}
 			else if (type == ItemType::Armor)
 			{
@@ -83,11 +84,13 @@ void Items::ChooseItem(Player& player)//Function to allow the player to choose w
 				player.armorIsEquipped = true; // Set isEquipped to true to indicate that the item is now equipped
 				player.equippedArmorHealth = healthBonus;
 				TypeWriter(player.name + " equips the " + name + " and gains " + std::to_string(healthBonus) + " bonus health, totalling " + std::to_string(player.health) + " health!", 30, true);
+				Delay(1000);
 			}
 		}
 		else if (equipChoice == 'N' || equipChoice == 'n')
 		{
 			TypeWriter(player.name + " decides not to equip the " + name + ".", 30, true);
+			Delay(1000);
 		}
 	}
 

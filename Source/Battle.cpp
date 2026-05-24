@@ -9,6 +9,7 @@
 #include "source.h"
 #include "Utils.h"
 #include "Items.h"
+#include "Enemies.h"
 #include "Player.h"
 
 int GenerateNumber(int min, int max) //Generates a random number at the start of the battle
@@ -42,13 +43,13 @@ void EnemyAttack(Player& player, Enemy& enemy)//Function to handle the enemy's a
 	player.TakeDamage(enemy.baseDamage);
 }
 
-bool BattleTimer(Player& player, Enemy& enemy) //ADD DAMAGE UPON SUCCESS OR FAILURE. NOT COMPLETED.
+bool BattleTimer(Player& player, Enemy& enemy, int speed, int windowSize) //ADD DAMAGE UPON SUCCESS OR FAILURE. NOT COMPLETED.
 {
     int position = 0;
-    int direction = 1;
     int maxWidth = 20;
-    int windowStart = 8;
-    int windowEnd = 12;
+    int direction = 1;
+    int windowStart = (maxWidth / 2) - (windowSize / 2);
+	int windowEnd = windowStart + windowSize;
 
     while (true)
     {
@@ -67,14 +68,14 @@ bool BattleTimer(Player& player, Enemy& enemy) //ADD DAMAGE UPON SUCCESS OR FAIL
         bar += "]";
 
         std::cout << "\r" << "Press 'Space' when in the window to deal damage: " << bar << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(speed));
 
         if (_kbhit())
         {
             char ch = _getch();
             if (ch == ' ')
             {
-                if (position >= windowStart && position <= windowEnd)
+                if (position > windowStart && position < windowEnd)
                 {
                     std::cout << std::endl;
                     TypeWriter("Direct hit!", 30, true);
@@ -99,7 +100,7 @@ bool BattleTimer(Player& player, Enemy& enemy) //ADD DAMAGE UPON SUCCESS OR FAIL
     }
 }
 
-bool Battle(Player& player, Enemy& enemy)//Function to handle the battle mechanics, including the coin flip to determine who goes first and the battle loop that continues until either the player or the enemy's health drops to 0 or below
+bool Battle(Player& player, Enemy& enemy, int speed, int windowSize)//Function to handle the battle mechanics, including the coin flip to determine who goes first and the battle loop that continues until either the player or the enemy's health drops to 0 or below
 {
 	TypeWriter("A coin flip determines who attacks first in battle. Heads for " + player.name + ", tails for " + enemy.name + ".", 30, true);
 	TypeWriter("Press any key to flip the coin...", 30, true);
@@ -117,7 +118,7 @@ bool Battle(Player& player, Enemy& enemy)//Function to handle the battle mechani
 
         while (player.health > 0 && enemy.health > 0)
         {
-            BattleTimer(player, enemy);
+            BattleTimer(player, enemy, speed, windowSize);
         }
 
 	//Determining the outcome of the battle and restoring the player's health if they win
@@ -125,11 +126,13 @@ bool Battle(Player& player, Enemy& enemy)//Function to handle the battle mechani
 	{
 		player.health = player.maxHealth; //Restores player's health to max after winning a battle
 		TypeWriter(player.name + " wins the battle! Your health has been restored to " + std::to_string(player.maxHealth) + ".", 30, true);
+        Delay(1000);
 		return true;
 	}
 	else
 	{
 		TypeWriter(enemy.name + " wins the battle!", 30, true);
+        Delay(1000);
 		return false;
 	}
 }
