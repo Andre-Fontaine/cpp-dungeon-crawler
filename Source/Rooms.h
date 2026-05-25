@@ -10,7 +10,9 @@ public:
 	std::string description;
 	bool hasEnemy = false;
 	bool hasItem = false;
+	bool hasItem2 = false;
 	Items item;
+	Items item2;
 };
 
 void ItemEncounter(Player& player, Rooms& room);

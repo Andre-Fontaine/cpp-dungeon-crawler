@@ -25,6 +25,7 @@ public:
 extern Items Mace;
 extern Items Axe;
 extern Items Bow;
+extern Items Greatsword;
 extern Items LeatherArmor;
 extern Items Chainmail;
 extern Items PlateArmor;

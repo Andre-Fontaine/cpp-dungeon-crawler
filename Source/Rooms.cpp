@@ -42,6 +42,20 @@ void ItemEncounter(Player& player, Rooms& room)
 		room.item.ChooseItem(player);
 		room.hasItem = false;
 	}
+	else if (room.hasItem2)
+	{
+		TypeWriter("***You found an item!***", 50, true);
+		if (room.item2.type == ItemType::Weapon)
+		{
+			TypeWriter(room.item2.name + ": " + room.item2.description + " It provides a " + std::to_string(room.item2.damageBonus) + " damage bonus.", 30, false);
+		}
+		else if (room.item2.type == ItemType::Armor)
+		{
+			TypeWriter(room.item2.name + ": " + room.item2.description + " It provides a " + std::to_string(room.item2.healthBonus) + " health bonus.", 30, false);
+		}
+		room.item2.ChooseItem(player);
+		room.hasItem2 = false;
+	}
 }
 
 //### ALL ROOMS AND ENCOUNTERS START HERE ###
@@ -116,9 +130,9 @@ void Basement(Player& player) //COMPLETED
 	char choice = (RoomChoice('A', 'B'));
 	if (choice == 'A' || choice == 'a')
 	{
-		Enemy GiantRat("Giant Rat", 100, 10);
+		Enemy GiantRat("Giant Rat", 40, 10);
 		TypeWriter("You do not move. You do not breathe. You stand in the dark and stare at the thing in the corner and tell yourself that if you are still enough, quiet enough, it will lose interest. For a moment it almost works. The growling stops. The eyes blink. Then it lunges and the basement explodes into chaos and you realise that standing still was never really an option.", 30, true);
-		EncounterEnemy(player, GiantRat, 50, 10);
+		EncounterEnemy(player, GiantRat, 50, 7);
 		TypeWriter("Silence returns to the basement. You stand there longer than you should, staring at nothing, breathing slowly. You told yourself staying still was a strategy. It was not. It was fear wearing the mask of a plan. You climb the stairs, back through the cellar, and push through into the foyer. You scan the walls and find a door on the far side, slightly ajar. Through the gap, shelves disappear into the dark. A library. You do not know what you are looking for. But something tells you this is where I need to go.", 30, true);
 		Library(player);
 	}
@@ -126,13 +140,13 @@ void Basement(Player& player) //COMPLETED
 	{
 		Enemy GiantRat("Giant Rat", 100, 10);
 		TypeWriter("Slow. Steady. One step back, then another. You keep your eyes on it and it keeps its eyes on you. The stairs are right behind you. You can feel them. Five more steps and you are out of here. Three more. Two. Then your foot finds the first step and the rat decides it has been patient long enough. It crosses the room faster than anything that size has any right to and suddenly the stairs do not matter anymore.", 30, true);
-		EncounterEnemy(player, GiantRat, 50, 10);
+		EncounterEnemy(player, GiantRat, 50, 7);
 		TypeWriter("Your breathing is the loudest thing in the room now. You were two steps from the stairs when it caught you and somehow you are still standing. You take the stairs up, back through the cellar, and push into the foyer. On the far wall a door sits slightly ajar. Through the gap, shelves stretch into the darkness. A library. Whatever brought you here and left you with nothing but instinct, maybe the answers are in there.", 30, true);
 		Library(player);
 	}
 }
 
-void Library(Player& player)
+void Library(Player& player) //COMPLETED
 {
 	Rooms Library;
 	Library.name = "---The Library---";
@@ -147,7 +161,7 @@ void Library(Player& player)
 		<< "A: Read the worn leather journal. Its pages filled with survival instincts, battle techniques, and hard won experience. (+ Damage, - Health" << endl
 		<< "B: Read the old medical tome. Detailing anatomy, endurance, and the limits of the human body. (+ Health, - Damage)" << endl;
 	
-	char choice = (RoomChoice('A', 'B'));
+	char choice = (RoomChoice('A', 'B')); 
 	if (choice == 'A')
 	{
 		TypeWriter("The journal reads like a confession. Whoever wrote it had seen things, done things, and learned from every one of them. By the time you close it your hands feel steadier and your instincts feel sharper. But something else lingers too. A coldness. A reminder of what it costs to become capable of violence. You feel it in your chest, a dull ache that was not there before.", 30, true);
@@ -155,6 +169,11 @@ void Library(Player& player)
 		player.health = player.maxHealth; // sync current health to new max
 		player.baseDamage += 5;
 		TypeWriter("You gain 5 bonus damage, totalling " + std::to_string(player.baseDamage) + ", but permanently lose 10 maximum health, totalling " + std::to_string(player.maxHealth) + ".", 90, true);
+		Delay(1000);
+		TypeWriter("You close the book and reach for the other one out of curiosity. Your fingers brush the spine and it crumbles instantly, pages dissolving into ash before they can reach the floor. In seconds there is nothing left. Not even a mark on the shelf where it stood. You pull your hand back slowly. This place has rules you do not understand yet. You are beginning to think that is intentional. Through a door at the far end of the library, the faint smell of something old drifts in. Decay, and beneath it, something else. Something that was once food.", 30, true);
+		Delay(1000);
+		ItemEncounter(player, Library);
+		DiningHall(player);
 	}
 	else if (choice == 'B')
 	{
@@ -163,5 +182,54 @@ void Library(Player& player)
 		player.health = player.maxHealth; // sync current health to new max
 		player.baseDamage -= 5;
 		TypeWriter("You gain 10 maximum health, totalling " + std::to_string(player.maxHealth) + ", but permanently lose 5 damage, totalling " + std::to_string(player.baseDamage) + ".", 90, true);
+		Delay(1000);
+		TypeWriter("You close the book and reach for the other one out of curiosity. Your fingers brush the spine and it crumbles instantly, pages dissolving into ash before they can reach the floor. In seconds there is nothing left. Not even a mark on the shelf where it stood. You pull your hand back slowly. This place has rules you do not understand yet. You are beginning to think that is intentional. Through a door at the far end of the library, the faint smell of something old drifts in. Decay, and beneath it, something else. Something that was once food. ", 30, true);
+		DiningHall(player);
 	}
+}
+
+void DiningHall(Player& player) //COMPLETED
+{
+	Rooms DiningHall;
+	DiningHall.name = "---The Dining Hall---";
+	DiningHall.item = Chainmail;
+	DiningHall.item2 = Greatsword;
+	TypeWriter(DiningHall.name, 60, true);
+	Delay(2000);
+	TypeWriter("The dining hall is vast and wrong. A table runs the length of the room, long enough to seat twenty, still set as though dinner is moments away. Rotting food sits on plates that have not been touched in what looks like decades, candles burned down to nothing in their holders, chairs pushed back at odd angles like the guests left in a hurry and never came back. The ceiling is high and dark, whatever chandelier once hung there long since fallen, its wreckage still scattered across the far end of the table. Mold climbs the walls in slow deliberate patterns. The portraits here are different from the foyer. These ones have been defaced, faces scratched out with something sharp, every single one of them. You do not know what that means. You are not sure you want to. Two exits present themselves. At the far end of the room, a set of double doors stand warped and swollen in their frame. A courtyard waits beyond the cracked glass. Blocking them, a suit of armor stands motionless in the center of the doorway, visor down, gauntlets hanging at its side. It is not alive. You are almost certain of that. Almost. To your right, a narrow corridor disappears into darkness. Suspended at its entrance, turning slowly with no hand to hold it, is a greatsword. Its blade catches no light. It simply glows faintly on its own, a deep and angry red. It has not moved toward you. Yet. Two paths. Two things standing in your way.", 30, true);
+	std::cout << endl
+		<< "A: Approach the suit of armor blocking the courtyard doors" << endl
+		<< "B: Enter the corridor and face the greatsword" << endl;
+
+	char choice = (RoomChoice('A', 'B'));
+	if (choice == 'A')
+	{
+		DiningHall.hasItem = true;
+		TypeWriter("You move toward the double doors. The suit of armor does not react until you are halfway across the room.Then its head turns toward you, slow and deliberate. No weapon. No blade. It raises its gauntleted fists expecting a battle.", 30, true);
+		Enemy SuitOfArmor("Suit of Armor", 150, 15);
+		EncounterEnemy(player, SuitOfArmor, 55, 3);
+		TypeWriter("The armor collapses in on itself with a sound like a cave in, pieces clattering across the stone floor in every direction. You stand over the wreckage breathing hard. You look down at the heap of metal and notice the chainmail beneath the outer plates, intact and surprisingly well kept considering what was just wearing it. You strip it free. It will do. You glance toward the corridor on your right. The greatsword is still there, still turning slowly in the dark, its red glow painting the walls. You give it a wide berth and push through the double doors into the courtyard beyond.", 30, true);
+		ItemEncounter(player, DiningHall);
+		Courtyard(player);
+	}
+	else if (choice == 'B')
+	{
+		DiningHall.hasItem2 = true;
+		TypeWriter("You turn toward the corridor. The greatsword stops its slow rotation the moment you take your first step. By the second step it is already moving towards you.", 30, true);
+		Enemy Greatsword("Greatsword", 50, 30);
+		Enemy SuitOfArmor("Suit of Armor", 75, 15);
+		EncounterEnemy(player, Greatsword, 45, 5);
+		ItemEncounter(player, DiningHall);
+		TypeWriter("The glow dies the moment it hits the floor. You pick the sword up. Heavy, well balanced, yours now. In doing so, a wall drops from the ceiling of the corridor and blocks your path forward. You turn back toward the dining hall. The suit of armor is still standing at the double doors exactly where it was, motionless, waiting. You pause. It has not moved. It is watching you, deciding what it'll do. You move toward the doors slowly, giving it every chance to step aside. It does not. You are going to have to go through it.", 30, true);
+		DiningHall.hasItem = true;
+		EncounterEnemy(player, SuitOfArmor, 45, 3);
+		TypeWriter("The armor hits the floor in pieces. You stand in the wreckage of it, chest heaving, arms burning. That was harder than it should have been. You were already worn down before it even raised its fists and it knew that, or whatever passes for knowing in something like that. You crouch down and pull the chainmail free from the collapsed plates. It is in better shape than you are. You straighten up, look back at the corridor one last time, then push through the double doors. The courtyard air hits you immediately, cold and damp and real. You take a breath and keep moving.", 30, true);
+		ItemEncounter(player, DiningHall);
+		Courtyard(player);
+	}
+}
+
+void Courtyard(Player& player)
+{
+
 }

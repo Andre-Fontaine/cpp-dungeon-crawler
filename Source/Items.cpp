@@ -98,6 +98,7 @@ void Items::ChooseItem(Player& player)//Function to allow the player to choose w
 Items Mace("Mace", "A solid iron headed club designed for one thing: delivering devastating, crushing blows that shields and armor can't stop.", 7, 0, ItemType::Weapon);
 Items Axe("Axe", "A broad-headed war axe, its blade chipped and stained from battles long past. The weight of it feels wrong in your hands, unbalanced and brutal. Whatever it was used for before, it was not sport.", 6, 0, ItemType::Weapon);
 Items Bow("Bow", "A longbow carved from dark wood, its string worn but intact. Someone maintained this weapon carefully, right up until they stopped.", 10, 0, ItemType::Weapon);
+Items Greatsword("Greatsword", "A massive two-handed sword, its blade blackened and etched with strange symbols. It hums with a dark energy that seems to resonate with the very air around it.", 12, 0, ItemType::Weapon);
 
 //Armor
 Items LeatherArmor("Leather Armor", "Light armor made from toughened animal hide. It offers basic protection while allowing for mobility.", 0, 5, ItemType::Armor);
