@@ -1,30 +1,30 @@
-#include <thread>
 #include <iostream>
+#include <thread>
 #include <chrono>
 #include <conio.h>
 #include "Utils.h"
+
 using namespace std;
 
-void TypeWriter(const string& text, int speed, bool newLineBefore) //Function to display text with a typewriter effect, used for storytelling and dialogue in the game
+void TypeWriter(const string& text, int speed, bool newLineBefore)
 {
-	if (newLineBefore)
-	{
-		cout << endl;
-	}
-	for (char c : text)
-	{
-		cout << c << flush;
-		this_thread::sleep_for(chrono::milliseconds(speed));
-	}
-	cout << endl;
+    if (newLineBefore)
+        cout << endl;
 
-	// Flush input buffer so keypresses during dialogue are discarded
-	while (_kbhit())
-		_getch();
+    for (char c : text)
+    {
+        cout << c << flush;
+        this_thread::sleep_for(chrono::milliseconds(speed));
+    }
+
+    cout << endl;
+
+    // Discard any keypresses buffered during the typewriter effect
+    while (_kbhit())
+        _getch();
 }
 
-void Delay(int milliseconds) //Function to create a delay in the game, used for dramatic effect and pacing
+void Delay(int milliseconds)
 {
-	this_thread::sleep_for(chrono::milliseconds(milliseconds));
+    this_thread::sleep_for(chrono::milliseconds(milliseconds));
 }
-

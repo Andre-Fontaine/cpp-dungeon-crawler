@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <iostream>
 #include "Utils.h"
 
 class Player;
@@ -12,16 +11,18 @@ class Items
 public:
     std::string name;
     std::string description;
-    int damageBonus;
-    int healthBonus;
-    ItemType type;
+    int         damageBonus;
+    int         healthBonus;
+    ItemType    type;
 
     Items();
     Items(std::string name, std::string description, int damageBonus, int healthBonus, ItemType type);
+
+    // Prompts the player to equip this item, applying the appropriate stat bonus.
     void ChooseItem(Player& player);
-	void ReplaceItem(Player& player, Items& newItem);
 };
 
+// Global item instances — defined in Items.cpp
 extern Items Mace;
 extern Items Axe;
 extern Items Bow;

@@ -1,33 +1,33 @@
 #include <iostream>
 #include <string>
+#include <limits>
 #include "source.h"
 #include "Rooms.h"
-#include "Enemies.h"
 #include "Player.h"
-#include "Items.h"
 #include "Utils.h"
+
 using namespace std;
 
-
-
-//Start of game
 string GameStart()
 {
-	TypeWriter("Welcome to the Dungeon Crawler! Prepare to explore a mysterious labyrinth filled with danger and adventure.");
-	string playerName;
-	TypeWriter("Please enter your name:");
-	getline(cin, playerName);
-	TypeWriter("Welcome, " + playerName + "! You won't know what lies ahead through this labyrinth. Find the means to survive. Your journey begins now.", 30, true);
-	return playerName;
+    TypeWriter("Welcome to Dungeon Crawler.", 30, false);
+    TypeWriter("You wake up. You do not know where you are. You do not know who you are.", 30, true);
+    TypeWriter("But you remember your name.", 60, true);
+    Delay(1000);
+
+    string playerName;
+    cout << endl << "Enter your name: ";
+    getline(cin, playerName);
+
+    TypeWriter("Welcome, " + playerName + ". Your journey begins now.", 30, true);
+    Delay(1500);
+    return playerName;
 }
 
 int main()
 {
-	string playerName = GameStart();
-	Player player(playerName, 100, 10);
-	Cellar(player);
-
-
-
-
+    string playerName = GameStart();
+    Player player(playerName, 100, 10);
+    Cellar(player);
+    return 0;
 }
