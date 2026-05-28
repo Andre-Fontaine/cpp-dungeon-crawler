@@ -14,8 +14,9 @@ Enemy::Enemy(string name, int health, int baseDamage)
 }
 
 //Function to display enemy encounter information
-void EncounterEnemy(Player& player, Enemy& enemy, int speed, int windowSize)
+void EncounterEnemy(Player& player, Enemy& enemy, int speed, int windowSize, bool isBoss)
 {
+	Delay(1500);
 	cout << endl 
 		<< "-----------------------------" << endl
 		<< "BATTLE COMMENCED" << endl
@@ -27,7 +28,7 @@ void EncounterEnemy(Player& player, Enemy& enemy, int speed, int windowSize)
 		<< "Your Damage: " << player.baseDamage << endl
 		<< "-----------------------------" << endl;
 
-	bool playerWon = Battle(player, enemy, speed, windowSize);
+	bool playerWon = Battle(player, enemy, speed, windowSize, isBoss);
 	if (!playerWon)
 	{
 		TypeWriter("Your journey ends here.", 80, true);

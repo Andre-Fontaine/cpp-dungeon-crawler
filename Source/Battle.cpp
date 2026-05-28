@@ -43,12 +43,15 @@ void EnemyAttack(Player& player, Enemy& enemy)//Function to handle the enemy's a
 	player.TakeDamage(enemy.baseDamage);
 }
 
-bool BattleTimer(Player& player, Enemy& enemy, int speed, int windowSize) //ADD DAMAGE UPON SUCCESS OR FAILURE. NOT COMPLETED.
+bool BattleTimer(Player& player, Enemy& enemy, int speed, int windowSize, bool randomPosition) //ADD DAMAGE UPON SUCCESS OR FAILURE. NOT COMPLETED.
 {
     int position = 0;
     int maxWidth = 20;
     int direction = 1;
-    int windowStart = (maxWidth / 2) - (windowSize / 2);
+    int windowStart = randomPosition
+        ? GenerateNumber(1, maxWidth - windowSize - 1)
+        : (maxWidth / 2) - (windowSize / 2);
+
 	int windowEnd = windowStart + windowSize;
 
     while (true)
@@ -100,7 +103,7 @@ bool BattleTimer(Player& player, Enemy& enemy, int speed, int windowSize) //ADD 
     }
 }
 
-bool Battle(Player& player, Enemy& enemy, int speed, int windowSize)//Function to handle the battle mechanics, including the coin flip to determine who goes first and the battle loop that continues until either the player or the enemy's health drops to 0 or below
+bool Battle(Player& player, Enemy& enemy, int speed, int windowSize, bool isBoss)//Function to handle the battle mechanics, including the coin flip to determine who goes first and the battle loop that continues until either the player or the enemy's health drops to 0 or below
 {
 	TypeWriter("A coin flip determines who attacks first in battle. Heads for " + player.name + ", tails for " + enemy.name + ".", 30, true);
 	TypeWriter("Press any key to flip the coin...", 30, true);
@@ -116,9 +119,21 @@ bool Battle(Player& player, Enemy& enemy, int speed, int windowSize)//Function t
 			EnemyFirst(player, enemy);
 		}
 
-        while (player.health > 0 && enemy.health > 0)
+        if (isBoss)
         {
-            BattleTimer(player, enemy, speed, windowSize);
+            while (player.health > 0 && enemy.health > 0)
+            {
+                int CurrentSpeed = GenerateNumber(20, 30);
+				int CurrentWindowSize = GenerateNumber(2, 4);
+				BattleTimer(player, enemy, CurrentSpeed, CurrentWindowSize, true);
+            }
+        }
+        else
+        {
+            while (player.health > 0 && enemy.health > 0)
+            {
+                BattleTimer(player, enemy, speed, windowSize, false);
+            }
         }
 
 	//Determining the outcome of the battle and restoring the player's health if they win
